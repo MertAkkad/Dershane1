@@ -115,47 +115,54 @@ dotnet run seeddata
 - **Dershane.csproj**: Proje dosyası. Projenin bağımlılıklarını, hedef çerçeve bilgilerini ve diğer yapılandırma ayarlarını içerir.
 - **appsettings.json**: Uygulama yapılandırması. Veritabanı bağlantı dizelerini, günlük (log) ayarlarını ve diğer yapılandırma bilgilerini içerir.
 - **Dershane.sln**: Visual Studio çözüm dosyası.
+- **appsettings.Development.json**: Geliştirme ortamı için özel yapılandırma ayarları.
 
 ### Klasör Yapısı
 - **Controllers/**: HTTP isteklerini işleyen MVC denetleyicilerini içerir.
-  - **HomeController.cs**: Ana sayfa ve karşılama ekranı işlemlerini yönetir.
   - **AdminController.cs**: Yönetici paneli ve yönetici işlemlerini yönetir.
-  - **StudentsController.cs**: Öğrenci kayıtları, profiller ve öğrenci işlemlerini yönetir.
-  - **TeachersController.cs**: Öğretmen profilleri ve işlemlerini yönetir.
-  - **CoursesController.cs**: Kurs oluşturma, düzenleme ve silme işlemlerini yönetir.
-  - **AccountController.cs**: Kullanıcı kimlik doğrulama ve yetkilendirme işlemlerini yönetir.
+  - **HomeController.cs**: Ana sayfa ve karşılama ekranı işlemlerini yönetir.
+  - **IletisimController.cs**: İletişim formu ve iletişim bilgilerini yönetir.
+  - **HakkimizdaController.cs**: Hakkımızda sayfası içeriğini yönetir.
+  - **SubelerController.cs**: Şubeler bilgilerini ve görüntüleme işlemlerini yönetir.
+  - **EgitimController.cs**: Eğitim programları ve içeriklerini yönetir.
+  - **DokumanController.cs**: Eğitim dokümanları ve kaynakları yönetir.
+  - **LayoutController.cs**: Sayfa düzeni ve temalarını yönetir.
 
 - **Models/**: Veri modellerini ve görünüm modellerini içerir.
-  - **Student.cs**: Öğrenci veri modeli ve özelliklerini tanımlar.
-  - **Teacher.cs**: Öğretmen veri modeli ve özelliklerini tanımlar.
-  - **Course.cs**: Kurs veri modeli ve özelliklerini tanımlar.
-  - **Payment.cs**: Ödeme veri modeli ve özelliklerini tanımlar.
-  - **User.cs**: Kullanıcı veri modeli ve kimlik doğrulama özelliklerini tanımlar.
-  - **ViewModels/**: Görünüm modellerini içerir, genellikle formlar ve veri girişi için kullanılır.
+  - **HomeModel.cs**: Ana sayfa için veri modeli.
+  - **AdminModel.cs**: Yönetici paneli için veri modeli.
+  - **IletisimModel.cs**: İletişim sayfası için veri modeli.
+  - **HakkimizdaModel.cs**: Hakkımızda sayfası için veri modeli.
+  - **SubelerModel.cs**: Şubeler sayfası için veri modeli.
+  - **EgitimModel.cs**: Eğitim programları için veri modeli.
+  - **DokumanModel.cs**: Doküman ve kaynaklar için veri modeli.
+  - **KurumsalModel.cs**: Kurumsal bilgiler için veri modeli.
+  - **ErrorViewModel.cs**: Hata sayfaları için veri modeli.
 
 - **Views/**: Kullanıcı arayüzü için Razor görünümlerini içerir.
-  - **Home/**: Ana sayfa görünümleri.
   - **Admin/**: Yönetici paneli görünümleri.
-  - **Students/**: Öğrenci işlemleri için görünümler.
-  - **Teachers/**: Öğretmen işlemleri için görünümler.
-  - **Courses/**: Kurs işlemleri için görünümler.
-  - **Account/**: Giriş, kayıt ve hesap yönetimi görünümleri.
+  - **Home/**: Ana sayfa görünümleri.
+  - **Iletisim/**: İletişim sayfası görünümleri.
+  - **Hakkimizda/**: Hakkımızda sayfası görünümleri.
+  - **Subeler/**: Şubeler sayfası görünümleri.
+  - **Egitim/**: Eğitim programları sayfası görünümleri.
+  - **Dokuman/**: Doküman ve kaynaklar sayfası görünümleri.
   - **Shared/**: Tüm görünümlerde paylaşılan şablonlar ve kısmi görünümler.
-    - **_Layout.cshtml**: Temel sayfa düzeni şablonu.
+  - **_ViewStart.cshtml**: Tüm görünümler için başlangıç şablonu.
+  - **_ViewImports.cshtml**: Görünümlerde kullanılan namespace ve tag helper tanımları.
 
 - **Data/**: Veritabanı bağlamını ve yapılandırmalarını içerir.
   - **ApplicationDbContext.cs**: Entity Framework veritabanı bağlamı, modelleri veritabanına bağlar.
-  - **Repositories/**: Veritabanı işlemleri için repository sınıfları.
-  - **SeedData.cs**: Başlangıç verileri ve örnek veri oluşturma fonksiyonları içerir.
 
 - **Migrations/**: Veritabanı göç dosyalarını içerir, veritabanı şema değişikliklerini yönetir.
-  - Her migrasyon, veritabanı şemasını güncelleyen kod içerir.
+  - **20250226163653_InitialCreate.cs**: İlk veritabanı şeması oluşturma migrasyonu.
+  - **20250226163653_InitialCreate.Designer.cs**: İlk migrasyon için tasarım bilgileri.
+  - **[timestamp]_AddEtkinliklerTable.cs**: Etkinlikler tablosu ekleyen migrasyon.
+  - **ApplicationDbContextModelSnapshot.cs**: Veritabanı şemasının güncel halinin anlık görüntüsü.
 
 - **wwwroot/**: CSS, JavaScript ve görseller gibi statik dosyaları içerir.
   - **css/**: Stil dosyaları.
-    - **site.css**: Ana site stil dosyası.
   - **js/**: JavaScript dosyaları.
-    - **site.js**: Ana site JavaScript dosyası.
   - **lib/**: Üçüncü taraf kütüphaneler (Bootstrap, jQuery, vb.).
   - **images/**: Resimler ve ikonlar.
 
