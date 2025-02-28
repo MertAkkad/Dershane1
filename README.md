@@ -39,14 +39,14 @@ Uygulama, Entity Framework Core Code-First yaklaşımını kullanır. Veritaban�
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=SUNUCU_ADI;Database=DershaneDB;User Id=KULLANICI_ADI;Password=SIFRE;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=SUNUCU_ADI;Database=DershaneDB;User Id=KULLANICI_ADI;Password=SIFRE;TrustServerCertificate=True;Encrypt=False;"
 }
 ```
 
 Windows kimlik doğrulaması kullanıyorsanız:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=SUNUCU_ADI;Database=DershaneDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=SUNUCU_ADI;Database=DershaneDB;Trusted_Connection=True;TrustServerCertificate=True;;Encrypt=False"
 }
 ```
 
