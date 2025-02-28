@@ -22,7 +22,7 @@ Bu uygulamayı yerel olarak çalıştırmak için aşağıdakilere ihtiyacınız
 
 ### 1. Repository'i Klonlama
 ```bash
-git clone [repository-url]
+git clone https://github.com/MertAkkad/Dershane1.git
 cd Dershane1
 ```
 
