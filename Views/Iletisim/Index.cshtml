@@ -1,0 +1,67 @@
+@model Dershane.Models.IletisimModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Keep existing styles */
+    </style>
+</head>
+<body>
+    <h1>İletişim</h1>
+    <div class="contact-container">
+        <div class="contact-info">
+            @await Html.PartialAsync("Kurumsal_iletisim", (KurumsalModel)ViewBag.KurumsalBilgiler)
+        </div>
+
+        <form id="contact-form" onsubmit="submitForm(event)">
+            <div class="mb-3">
+                <label for="Isim" class="form-label">İsim</label>
+                <input type="text" class="form-control" id="Isim" name="Isim" placeholder="İsminiz" required>
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" placeholder="Email Adresiniz" required>
+            </div>
+            <div class="mb-3">
+                <label for="Mesaj" class="form-label">Mesaj</label>
+                <textarea class="form-control" id="Mesaj" name="Mesaj" rows="4" placeholder="Mesajınız" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Gönder</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = {
+                Isim: $('#Isim').val(),
+                Email: $('#Email').val(),
+                Mesaj: $('#Mesaj').val()
+            };
+
+            $.ajax({
+                url: '/Iletisim/Submit',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    if (response.success) {
+                        alert('Mesajınız başarıyla gönderildi!');
+                        $('#contact-form')[0].reset();
+                    } else {
+                        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                    }
+                },
+                error: function() {
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

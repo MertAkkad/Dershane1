@@ -1,0 +1,375 @@
+﻿@model Dershane.Models.HomeModel
+
+<div class="main-container">
+    <!-- Sayfanın sol tarafı -->
+    <div class="left-section">
+        <!-- Banner -->
+        <div class="banner-container">
+            <partial name="Banner" />
+        </div>
+        <!-- Anasayfa İçeriği-->
+        <div class="text-container">
+            @if (Model.Anasayfa_icerik != null && Model.Anasayfa_icerik.Any())
+            {
+                <h3>@Model.Anasayfa_icerik[0].Anasayfa_Baslik</h3>
+                <p>@Model.Anasayfa_icerik[0].Anasayfa_Icerik</p>
+            }
+            else
+            {
+                <h3>Hoş Geldiniz</h3>
+                <p>İçerik henüz eklenmemiş.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Sayfanın sağı -->
+    <div class="right-section">
+        <!-- Duyurular Container -->
+        <div class="Duyurular-container">
+            <div class="container-header">
+                <h4>Duyurular</h4>
+            </div>
+            <div class="container-content">
+                <partial name="Duyurular" />
+            </div>
+        </div>
+        <!-- Haberler Container -->
+        <div class="Haberler-container">
+            <div class="container-header">
+                <h4>Haberler</h4>
+            </div>
+            <div class="container-content">
+                <partial name="Haberler" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Banner -->
+@Html.Partial("KurumsalBilgiler", (KurumsalModel)ViewBag.KurumsalBilgiler)
+    <div class="highlights-title">
+        <h2>Haber, Duyuru ve Etkinlikler</h2>
+    </div>
+<!-- Haber, Duyuru ve Etkinlikler Container -->
+<div class="highlights-container">
+
+    <div class="highlight-box news">
+        <h3>Haberler</h3>
+        @if (Model.Haberler != null && Model.Haberler.Any(h => h.Gorsel_Data != null))
+        {
+            var latestNews = Model.Haberler
+                .Where(h => h.Gorsel_Data != null)
+                .OrderByDescending(h => h.Haber_Tarih)
+                .FirstOrDefault();
+            
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(latestNews.Gorsel_Data)" 
+                 alt="@latestNews.Haber_Baslik" />
+            <h4>@latestNews.Haber_Baslik</h4>
+            <p>@latestNews.Haber_Icerik</p>
+            <span class="date">@latestNews.Haber_Tarih?.ToString("dd/MM/yyyy")</span>
+        }
+        else 
+        {
+            <p>Henüz görsel içeren haber eklenmemiş.</p>
+        }
+    </div>
+    <div class="highlight-box announcements">
+        <h3>Duyurular</h3>
+        @if (Model.Duyurular != null && Model.Duyurular.Any(d => d.Gorsel_Data != null))
+        {
+            var latestAnnouncement = Model.Duyurular
+                .Where(d => d.Gorsel_Data != null)
+                .OrderByDescending(d => d.Duyuru_Tarih)
+                .FirstOrDefault();
+            
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(latestAnnouncement.Gorsel_Data)" 
+                 alt="@latestAnnouncement.Duyuru_Baslik" />
+            <h4>@latestAnnouncement.Duyuru_Baslik</h4>
+            <p>@latestAnnouncement.Duyuru_Icerik</p>
+            <span class="date">@latestAnnouncement.Duyuru_Tarih.ToString("dd/MM/yyyy")</span>
+        }
+        else 
+        {
+            <p>Henüz görsel içeren duyuru eklenmemiş.</p>
+        }
+    </div>
+    <div class="highlight-box events">
+        <h3>Etkinlikler</h3>
+        @if (Model.Etkinlikler != null && Model.Etkinlikler.Any(e => e.Gorsel_Data != null))
+        {
+            var latestEvent = Model.Etkinlikler
+                .Where(e => e.Gorsel_Data != null)
+                .OrderByDescending(e => e.Etkinlik_Tarih)
+                .FirstOrDefault();
+            
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(latestEvent.Gorsel_Data)" 
+                 alt="@latestEvent.Etkinlik_Baslik" />
+            <h4>@latestEvent.Etkinlik_Baslik</h4>
+            <p>@latestEvent.Etkinlik_Icerik</p>
+            <span class="date">@latestEvent.Etkinlik_Tarih.ToString("dd/MM/yyyy")</span>
+        }
+        else 
+        {
+            <p>Henüz görsel içeren etkinlik eklenmemiş.</p>
+        }
+    </div>
+</div>
+
+<style>
+ /*Containerlarin   stilleri*/
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+    box-sizing: border-box;
+  }
+
+
+
+
+  .main-container {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 30px;  /* Add margin to create space between main content and banner */
+  }
+
+
+
+
+  .left-section {
+    flex: 7;     /* Sayfanın sol ve sağ tarafı oranları*/
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%; 
+  }
+  .right-section {
+    flex: 3;   /* Sayfanın sol ve sağ tarafı oranları*/
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%; 
+  }
+
+
+  .banner-container {
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    overflow: hidden;
+    position: relative;
+     margin: 0 auto;
+  }
+  
+
+    
+    .banner-container img {
+        width: 100%;
+        max-height: 500px; /* adjust this value as needed */
+        object-fit: cover;
+        display: block;
+    }
+
+
+
+  .text-container {
+    width: 100%;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+  }
+
+ 
+
+  .Duyurular-container,
+  .Haberler-container {
+    width: 100%;
+    height: 500px;
+    background:rgba(255, 255, 255, 0.67);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    border-radius: 15px 15px 0 0;
+    background: #ffffff;
+  }
+
+  .container-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+  }
+
+  .news-title,
+  .announcement-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .text-container h3,
+  .Duyurular-container h4,
+  .Haberler-container h4 {
+    margin: 0 0 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2575fc;
+    color: #333;
+  }
+
+ 
+  .Duyurular-container p,
+  .text-container p,
+  .Haberler-container p {
+    margin: 10px 0;
+    color:rgb(0, 0, 0);
+    line-height: 1.6;
+  }
+  .contact-banner {
+    width: 100%;
+    background: #f8f9fa;
+    padding: 20px 0;
+    margin-bottom: 30px;  /* Add margin between banner and highlights */
+}
+
+.contact-info-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.info-item {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.info-item i {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.highlights-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0;
+    max-width: 1500px;
+    margin: 0 auto 200px auto;
+    height: 450px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.highlight-box {
+    flex: 1;
+    min-width: 500px;
+    height: 100%;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.highlight-box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6; /* Make image faded */
+    z-index: 1;
+}
+
+.highlight-box h3 {
+    position: relative;
+    z-index: 2;
+    margin: 20px;
+    color: #000;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.highlight-box h4 {
+    position: relative;
+    z-index: 2;
+    margin: 10px 20px;
+    color: #000;
+    font-size: 1.3em;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.highlight-box .date {
+    position: relative;
+    z-index: 2;
+    margin: 10px 20px;
+    color: #333;
+    font-size: 0.9em;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.highlight-box p {
+    position: relative;
+    z-index: 2;
+    margin: 10px 20px;
+    color: #000;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    max-height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Add a semi-transparent overlay for better text readability */
+.highlight-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 1;
+}
+.page-content {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 200px;
+    background: linear-gradient(110deg, rgb(255, 255, 255),rgb(255, 255, 255)) !important;
+}
+
+.highlights-title {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px; /* Space between title and highlight boxes */
+}
+
+.highlights-title h2 {
+    font-size: 2em;
+    color: #333;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 2px solid #2575fc; /* Optional: underline for the title */
+}
+
+</style>

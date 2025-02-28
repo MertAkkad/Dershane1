@@ -1,0 +1,131 @@
+@model Dershane.Models.AdminModel
+
+
+<link rel="stylesheet" href="~/css/admin_style.css" />
+
+<div class="header-section">
+    <form asp-action="Logout" asp-controller="Admin" method="post" class="logout-form">
+        <button type="submit" class="logout-button">Çıkış Yap</button>
+    </form>
+</div>
+
+<div class="container">
+    @foreach (var table in Model.Tables.Keys)
+    {<h2>@table</h2>
+        <div class="table-container">
+            
+            <button class="add-btn" onclick="showAddForm('@table')"> @table Ekle</button>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        @foreach (var prop in Model.Tables[table].FirstOrDefault()?.GetType().GetProperties().Select(p => p.Name) ?? new List<string>())
+                        {
+                            <th>@prop</th>
+                        }
+                        <th>Düzenle/Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Tables[table])
+                    {
+                        <tr>
+                            @foreach (var prop in item.GetType().GetProperties())
+                            {
+                                <td>@prop.GetValue(item)</td>
+                            }
+                            <td>
+                                <button class="edit-btn" onclick="showEditForm(@item.GetType().GetProperty("Id")?.GetValue(item), '@table')">Düzenle</button>
+                                <button class="delete-btn" onclick="deleteItem(@item.GetType().GetProperty("Id")?.GetValue(item), '@table')">Sil</button>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Tables[table].Any())
+                    {
+                        <tr>
+                            <td colspan="@(Model.Tables[table].FirstOrDefault()?.GetType().GetProperties().Length + 1 ?? 1)">No data available.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+
+
+
+<!-- Ekleme ve duzenleme penceresi -->
+<div id="popup-overlay" class="popup-overlay">
+    <div id="form-container" class="popup-container"></div>
+</div>
+
+<script>
+    function showAddForm(tableName) {
+        fetch(`/Admin/Create?tableName=${tableName}`)
+            .then(response => response.text())
+            .then(html => { 
+                document.getElementById("form-container").innerHTML = html;
+                document.getElementById("popup-overlay").style.display = 'block';
+            });
+    }
+
+    function showEditForm(id, tableName) {
+        fetch(`/Admin/Edit?id=${id}&tableName=${tableName}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("form-container").innerHTML = html;
+                document.getElementById("popup-overlay").style.display = 'block';
+            });
+    }
+
+    function deleteItem(id, tableName) {
+        if (confirm('Silmek istediğinize emin misiniz?')) {
+            fetch(`/Admin/Delete?id=${id}&tableName=${tableName}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) location.reload();
+                else alert('Hata oluştu.');
+            });
+        }
+    }
+
+    function closeForm() {
+        document.getElementById("popup-overlay").style.display = 'none';
+    }
+
+    
+    document.getElementById("popup-overlay").addEventListener("click", function(e) {
+        if (e.target === this) {
+            closeForm();
+        }
+    });
+
+    function submitForm() {
+               //   
+        var form = document.querySelector('.popup-container form');
+        if (!form) {
+            alert('Form not found');
+            return;
+        }
+        var formData = new FormData(form);
+        
+        fetch('/Admin/Save', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                closeForm();
+                location.reload();
+            } else {
+                alert('Error saving data');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving data');
+        });
+    }
+</script>

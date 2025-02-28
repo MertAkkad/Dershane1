@@ -1,0 +1,38 @@
+@model Dershane.Models.KurumsalModel
+<link rel="stylesheet" href="~/css/admin_style.css" />
+
+<div class="form-container">
+    <form id="kurumsalForm" asp-action="Save" asp-controller="Admin" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="tableName" value="KurumsalBilgiler" />
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label for="Tel_No">Telefon Numarası</label>
+            <input type="text" id="Tel_No" name="Tel_No" class="form-control" value="@Model.Tel_No" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Kurumsal_Email">Kurumsal Email</label>
+            <input type="email" id="Kurumsal_Email" name="Kurumsal_Email" class="form-control" value="@Model.Kurumsal_Email" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Adres">Adres</label>
+            <textarea id="Adres" name="Adres" class="form-control" required>@Model.Adres</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Gorsel_Data">Görsel Yükle</label>
+            <input type="file" id="Gorsel_Data" name="Gorsel_Data" class="form-control" accept="image/*" />
+            @if (Model?.Gorsel_Data != null)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" alt="Mevcut görsel" />
+            }
+        </div>  
+
+        <div class="form-group">
+            <button class="btn btn-kaydet" type="button" onclick="submitForm()">Kaydet</button>
+            <button class="btn btn-iptal" type="button" onclick="closeForm()">İptal</button>
+        </div>
+    </form>
+</div>

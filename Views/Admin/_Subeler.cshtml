@@ -1,0 +1,30 @@
+@model Dershane.Models.SubelerModel
+<link rel="stylesheet" href="~/css/admin_style.css" />
+<div class="form-container">
+    <form id="subeler-form" asp-action="Save" asp-controller="Admin" method="post">
+        <input type="hidden" name="tableName" value="Subeler" />
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label for="SubeAdi">Şube Adı</label>
+            <input type="text" id="SubeAdi" name="SubeAdi" class="form-control" asp-for="SubeAdi" value="@Model.SubeAdi" required />
+        </div>
+
+        <div class="form-group">
+            <label for="SubeKonum">Şube Konum</label>
+            <input type="text" id="SubeKonum" name="SubeKonum" class="form-control" asp-for="SubeKonum" value="@Model.SubeKonum" required />
+            </div>
+        <div class="form-group">
+            <label for="Gorsel_Data">Görsel Yükle</label>
+            <input type="file" id="Gorsel_Data" name="Gorsel_Data" class="form-control" accept="image/*" />
+            @if (Model?.Gorsel_Data != null)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" alt="Mevcut görsel" style="max-width: 200px;" />
+            }
+        </div>  
+        <div class="form-group">
+            <button class="btn btn-kaydet" type="button" onclick="submitForm()">Kaydet</button>
+            <button class="btn btn-iptal" type="button" onclick="closeForm()">İptal</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,94 @@
+@model Dershane.Models.Hakkimizda_Model
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda</title>
+    <style>
+        .hakkimizda-container {
+            padding: 20px;
+            margin: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .kadro-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px;
+            margin: 20px;
+        }
+        
+        .kadro-elemani {
+            flex: 0 0 250px; /* Fixed width */
+            height: 150px; /* Fixed height */
+            padding: 10px;
+            background: linear-gradient(145deg, #273c75, #192a56);
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            align-items: center;
+        }
+        
+        .kadro-elemani h3 {
+           margin-top: 10px;
+            color: #ffffff;
+            font-size: 20px;
+        }
+        
+        .kadro-elemani p {
+            margin: 3px 0;
+            color: #e0e0e0;
+            font-size: 15px;
+        }
+        
+        h1{
+            color: #192a56;
+            margin-bottom: 30px;
+            text-align: left;
+            
+        }
+        h2 {
+            color: #192a56;
+            margin: 20px;
+            text-align: left;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hakkimizda-container">
+        @if (Model.Hakkimizda_icerik != null && Model.Hakkimizda_icerik.Any())
+        {
+            foreach (var content in Model.Hakkimizda_icerik)
+            {
+                <h1>@content.Hakkimizda_Baslik</h1>
+                <p>@content.Hakkimizda_Icerik</p>
+            }
+        }
+    </div>
+
+    <h2>Kadromuz</h2>
+    <div class="kadro-container">
+        @if (Model.Kadromuz != null)
+        {
+            foreach (var member in Model.Kadromuz)
+            {
+                <div class="kadro-elemani">
+                    <h3>@member.Isim</h3>
+                    <p>@member.Alan</p>
+                    <p>@member.Email</p>
+                </div>
+            }
+        }
+    </div>
+</body>
+</html>

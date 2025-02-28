@@ -1,0 +1,43 @@
+@model Dershane.Models.HomeModel
+
+<div class="banner-container" style="position: relative; overflow: hidden;">
+    @if (Model?.Banner != null)
+    {
+        @if (Model.Banner.Gorsel_Data != null)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Banner.Gorsel_Data)" 
+                 alt="@Model.Banner.Banner_Baslik" 
+                 style="max-width: 100%; height: auto; object-fit: cover;" />
+        }
+        else if (!string.IsNullOrEmpty(Model.Banner.Gorsel_Url))
+        {
+            <img src="@Model.Banner.Gorsel_Url" 
+                 alt="@Model.Banner.Banner_Baslik" 
+                 style="max-width: 100%; height: auto; object-fit: cover;" />
+        }
+
+        <div class="banner-text" style="position: absolute; top: 20px; left: 20px; color: white; z-index: 10;">
+            <h2>@Model.Banner.Banner_Baslik</h2>
+            <p>@Model.Banner.Banner_Icerik</p>
+        </div>
+    }
+    else
+    {
+        <p>Banner bulunamadı.</p>
+    }
+</div>
+
+<style>
+    .banner-text {
+        position: absolute;
+        top: 20px; /* Adjust as needed */
+        left: 20px; /* Adjust as needed */
+        color: white; /* Text color */
+        z-index: 10; /* Ensure text is above the image */
+        background-color: rgba(157, 157, 157, 0.5); /* Optional: semi-transparent background for better readability */
+        padding: 10px; /* Optional: padding around the text */
+        border-radius: 5px; /* Optional: rounded corners */
+    }
+</style>
+
+(KurumsalModel)ViewBag.KurumsalBilgiler

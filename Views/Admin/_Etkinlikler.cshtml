@@ -1,0 +1,49 @@
+@model Dershane.Models.Etkinlikler
+<link rel="stylesheet" href="~/css/admin_style.css" />
+<form id="etkinlikler-form" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="tableName" value="Etkinlikler" />
+    <input type="hidden" name="Id" value="@Model?.Id" />
+    
+    <div class="form-group">
+        <label for="Etkinlik_Baslik">Etkinlik Başlığı</label>
+        <input type="text" class="form-control" id="Etkinlik_Baslik" name="Etkinlik_Baslik" 
+               value="@Model?.Etkinlik_Baslik" required>
+    </div>
+
+    <div class="form-group">
+        <label for="Etkinlik_Icerik">Etkinlik İçeriği</label>
+        <textarea class="form-control" id="Etkinlik_Icerik" name="Etkinlik_Icerik" 
+                  required>@Model?.Etkinlik_Icerik</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Etkinlik_Tarih">Etkinlik Tarihi</label>
+        <input type="datetime-local" class="form-control" id="Etkinlik_Tarih" name="Etkinlik_Tarih" 
+               value="@(Model?.Etkinlik_Tarih.ToString("yyyy-MM-ddTHH:mm"))" required>
+    </div>
+
+    <div class="form-group">
+        <label for="gorsel">Görsel Yükle</label>
+        <input type="file" class="form-control" id="gorsel" name="gorsel" accept="image/*">
+        @if (Model?.Gorsel_Data != null)
+        {
+            <div class="mt-2">
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" 
+                     style="max-width: 200px;" alt="Mevcut Görsel" />
+                <p class="text-muted">Yeni bir görsel yüklerseniz mevcut görsel değiştirilecektir.</p>
+            </div>
+        }
+    </div>
+
+    <button type="button" class="btn btn-kaydet" onclick="submitForm()">Kaydet</button>
+    <button type="button" class="btn btn-iptal" onclick="closeForm()">İptal</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('etkinlikler-form');
+        if (!form.querySelector('[name="Etkinlik_Tarih"]').value) {
+            form.querySelector('[name="Etkinlik_Tarih"]').value = new Date().toISOString().slice(0, 16);
+        }
+    });
+</script>

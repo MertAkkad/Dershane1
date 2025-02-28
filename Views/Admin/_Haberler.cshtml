@@ -1,0 +1,37 @@
+@model Dershane.Models.Haberler
+<link rel="stylesheet" href="~/css/admin_style.css" />
+<div class="form-container">
+    <form asp-action="Save" asp-controller="Admin" method="post" enctype="multipart/form-data" id="haberler-form">
+        <input type="hidden" name="tableName" value="Haberler" />
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label for="Haber_Baslik">Haber Başlık</label>
+            <input type="text" id="Haber_Baslik" name="Haber_Baslik" class="form-control" asp-for="Haber_Baslik" value="@Model.Haber_Baslik" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Haber_Icerik">Haber İçerik</label>
+            <textarea id="Haber_Icerik" name="Haber_Icerik" class="form-control" asp-for="Haber_Icerik">@Model.Haber_Icerik</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Haber_Tarih">Haber Tarih</label>
+            <input type="date" id="Haber_Tarih" name="Haber_Tarih" class="form-control" asp-for="Haber_Tarih" value="@(Model.Haber_Tarih.HasValue ? Model.Haber_Tarih.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Gorsel_Data">Görsel Yükle</label>
+            <input type="file" id="Gorsel_Data" name="Gorsel_Data" class="form-control" accept="image/*" />
+            @if (Model?.Gorsel_Data != null)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" alt="Mevcut görsel" style="max-width: 200px; margin-top: 10px;" />
+            }
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-kaydet" type="button" onclick="submitForm()">Kaydet</button>
+            <button class="btn btn-iptal" type="button" onclick="closeForm()">İptal</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,55 @@
+@model Dershane.Models.KurumsalModel
+
+<div class="contact-banner">
+    @if (Model != null)
+    {
+        <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Merkezimiz</h3>
+            <p>@(Model.Adres ?? "Adres bilgisi bulunamadı")</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <h3>Telefon Numaramız</h3>
+            <p>@(Model.Tel_No ?? "Telefon bilgisi bulunamadı")</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <h3>Email Adresimiz</h3>
+            <p>@(Model.Kurumsal_Email ?? "Email bilgisi bulunamadı")</p>
+        </div>
+    }
+</div>
+
+<style>
+    .contact-banner {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .info-item {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .info-item i {
+        font-size: 24px;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .info-item h3 { 
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .info-item span {
+        color: #212529;
+    }
+</style>

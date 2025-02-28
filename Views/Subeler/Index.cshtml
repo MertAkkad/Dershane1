@@ -1,0 +1,87 @@
+@model List<Dershane.Models.SubelerModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şubelerimiz</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right,rgb(255, 255, 255),rgb(255, 255, 255));
+            color: white;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .sube-container {
+            width: calc(50% - 40px);
+            height: 200px;
+            background: linear-gradient(145deg, #273c75, #192a56);
+            border-radius: 20px;
+            margin: 20px;
+            text-align: center;
+            line-height: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.2);
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            position: relative;
+        }
+        .sube-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5), -6px -6px 15px rgba(255, 255, 255, 0.3);
+        }
+        .sube-container.active {
+            width: calc(100% - 40px);
+            height: 400px;
+            line-height: normal;
+            padding: 20px;
+            background: linear-gradient(145deg, #485aa1, #39487f);
+        }
+        .sube-content {
+            display: none;
+            color: white;
+            font-size: 16px;
+        }
+        h1 {
+            color: rgb(9, 19, 47);
+            margin: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Şubelerimiz</h1>
+    
+    @foreach (var sube in Model)
+    {
+        <div class="sube-container" onclick="toggleContent(this)">
+            <strong>@sube.SubeAdi</strong>
+            <div class="sube-content">
+                <p>Konum: @sube.SubeKonum</p>
+            </div>
+        </div>
+    }
+    
+    <script>
+        function toggleContent(element) {
+            $('.sube-container.active').not(element).each(function() {
+                $(this).removeClass('active');
+                $(this).find('.sube-content').slideUp();
+            });
+
+            $(element).toggleClass('active');
+            $(element).find('.sube-content').slideToggle();
+        }
+    </script>
+</body>
+</html>

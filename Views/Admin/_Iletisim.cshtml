@@ -1,0 +1,35 @@
+@model Dershane.Models.IletisimModel
+<link rel="stylesheet" href="~/css/admin_style.css" />
+<div class="form-container">
+    <form asp-action="Save" asp-controller="Admin" method="post">
+        <input type="hidden" name="tableName" value="Iletisim" />
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label for="Isim">Telefon</label>
+            <input type="text" id="Isim" name="Isim" class="form-control" asp-for="Isim"  value="@Model.Isim"      required />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" id="Email" name="Email" class="form-control" asp-for="Email" value="@Model.Email" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Mesaj">Mesaj</label>
+            <textarea id="Mesaj" name="Mesaj" class="form-control" asp-for="Mesaj" value="@Model.Mesaj" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Gorsel_Data">Görsel Yükle</label>
+            <input type="file" id="Gorsel_Data" name="Gorsel_Data" class="form-control" accept="image/*" />
+            @if (Model?.Gorsel_Data != null)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" alt="Mevcut görsel" style="max-width: 200px;" />
+            }
+        </div>  
+        <div class="form-group">
+            <button class="btn btn-kaydet" type="button" onclick="submitForm()">Kaydet</button>
+            <button class="btn btn-iptal" type="button" onclick="closeForm()">İptal</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,29 @@
+@model Dershane.Models.Kadromuz
+<link rel="stylesheet" href="~/css/admin_style.css" />
+<div class="form-container">
+    <h3>@(Model.Id == 0 ? "Add New Kadro" : "Edit Kadro")</h3>
+    <form id="kadro-form">
+        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+        <input type="hidden" name="tableName" value="Kadromuz" />
+        <label for="Isim">İsim:</label>
+        <input type="text" id="Isim" name="Isim" value="@Model.Isim" required />
+
+        <label for="Alan">Alan:</label>
+        <input type="text" id="Alan" name="Alan" value="@Model.Alan" required />
+
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="Email" value="@Model.Email" required />
+        <div class="form-group">
+            <label for="Gorsel_Data">Görsel Yükle</label>
+            <input type="file" id="Gorsel_Data" name="Gorsel_Data" class="form-control" accept="image/*" />
+            @if (Model?.Gorsel_Data != null)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" alt="Mevcut görsel" style="max-width: 200px;" />
+            }
+        </div>  
+        <div class="form-group">
+            <button class="btn btn-kaydet" type="button" onclick="submitForm()">Kaydet</button>
+            <button class="btn btn-iptal" type="button" onclick="closeForm()">İptal</button>
+        </div>
+    </form>
+</div>

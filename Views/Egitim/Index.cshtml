@@ -1,0 +1,104 @@
+@model List<Dershane.Models.EgitimModel>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eğitimler</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, rgb(255, 255, 255), rgb(240, 240, 240));
+            background-size: cover;
+            background-position: center;
+            color: black;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .program-container {
+            width: calc(50% - 40px);
+            background: rgba(255, 255, 255, 0.7); 
+            border-radius: 20px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer; 
+         
+        }
+        .program-container:hover {
+            transform: translateY(-5px);
+        }
+        .hidden-text {
+            display: none; 
+            color: black;
+            font-size: 16px;
+        }
+        h1 {
+            background-color: rgba(255, 205, 97, 0.39);
+            color: rgb(255, 255, 255);
+            margin: 20px;
+        }
+        .left {
+            margin-right: auto; 
+        }
+        .right {
+            margin-left: auto;
+        }
+        .container {
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: flex-start;
+                        
+        }
+   
+        .egitim-item {
+            flex: 0 0 calc(50% - 20px); 
+            box-sizing: border-box; 
+            background:rgba(255, 255, 255, 0.56); 
+            padding: 15px; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+    </style>
+</head>
+@{
+    // Get the latest Egitim with non-null Gorsel_Data
+    var latestEgitim = Model.OrderByDescending(e => e.Id).FirstOrDefault(e => e.Gorsel_Data != null);
+    var backgroundImage = latestEgitim?.Gorsel_Data != null 
+        ? "url('data:image/jpeg;base64," + Convert.ToBase64String(latestEgitim.Gorsel_Data) + "')" 
+        : ""; // Keep existing background if Gorsel_Data is null
+}
+<body style="background-image: @(backgroundImage); background-size: cover; background-position: center;">
+    
+    <h1>Eğitim Programları</h1>
+    
+    <div class="container">
+        @foreach (var egitim in Model.Where(e => !string.IsNullOrEmpty(e.EgitimAdi) && !string.IsNullOrEmpty(e.EgitimAciklama)))
+        {
+          
+         <div class="egitim-item">
+            <h4>@egitim.EgitimAdi</h4>
+            <p>@egitim.EgitimAciklama</p>
+            <!-- Add more details as needed -->
+        </div>
+        }
+    </div>
+    
+    <script>
+        function toggleText(element) {
+            
+            $(element).find('.hidden-text').slideToggle();
+        }
+    </script>
+</body>
+</html>

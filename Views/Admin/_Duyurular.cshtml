@@ -1,0 +1,39 @@
+@model Dershane.Models.Duyurular
+<link rel="stylesheet" href="~/css/admin_style.css" />
+<div class="form-container">
+    <h3>@(Model.Id == 0 ? "Yeni Duyuru Ekle" : "Duyuru Düzenle")</h3>
+    <form asp-action="Save" asp-controller="Admin" method="post" enctype="multipart/form-data" id="duyuru-form">
+        <input type="hidden" name="tableName" value="Duyurular" />
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label for="Duyuru_Baslik">Duyuru Başlık</label>
+            <input type="text" id="Duyuru_Baslik" name="Duyuru_Baslik" class="form-control" asp-for="Duyuru_Baslik" value="@Model.Duyuru_Baslik" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Duyuru_Icerik">Duyuru İçerik</label>
+            <textarea id="Duyuru_Icerik" name="Duyuru_Icerik" class="form-control" asp-for="Duyuru_Icerik" required>@Model.Duyuru_Icerik</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Duyuru_Tarih">Duyuru Tarih</label>
+            <input type="date" id="Duyuru_Tarih" name="Duyuru_Tarih" class="form-control" asp-for="Duyuru_Tarih" value="@Model.Duyuru_Tarih.ToString("yyyy-MM-dd")" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Gorsel_Data">Görsel Yükle</label>
+            <input type="file" id="Gorsel_Data" name="Gorsel_Data" class="form-control" accept="image/*" />
+            @if (Model?.Gorsel_Data != null)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Gorsel_Data)" alt="Mevcut görsel" style="max-width: 200px; margin-top: 10px;" />
+            }
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-kaydet" type="button" onclick="submitForm()">Kaydet</button>
+            <button class="btn btn-iptal" type="button" onclick="closeForm()">İptal</button>
+        </div>
+    </form>
+</div>
+

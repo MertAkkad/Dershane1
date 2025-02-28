@@ -1,0 +1,15 @@
+@model Dershane.Models.HomeModel
+        @if (Model.Haberler != null && Model.Haberler.Any())
+        {
+            foreach (var haber in Model.Haberler)   
+            {
+                <div class="news-title">@haber.Haber_Baslik</div>
+                <p>@haber.Haber_Icerik</p>
+            }
+        }
+        else
+        {
+           
+            <p>İçerik henüz eklenmemiş.</p>
+        }
+      

@@ -1,0 +1,85 @@
+@model List<Dershane.Models.DokumanModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokümanlar</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255)); /* Default background */
+            color: black;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .dokuman-item {
+            flex: 0 0 calc(50% - 20px); 
+            box-sizing: border-box;
+            background: rgba(255, 244, 228, 0.84); 
+            padding: 15px;
+            margin: 10px;
+            
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+        }
+
+ 
+
+        h1 {
+            color: rgb(9, 19, 47);
+            margin: 20px;
+            text-align: center; 
+        }
+     
+    </style>
+</head>
+@{
+    //En son eklenen dosya
+    var latestDokuman = Model.OrderByDescending(e => e.Id).FirstOrDefault(e => e.Gorsel_Data != null);
+    var backgroundImage = latestDokuman?.Gorsel_Data != null 
+        ? "url('data:image/jpeg;base64," + Convert.ToBase64String(latestDokuman.Gorsel_Data) + "')" 
+        : ""; //Arka plan resmi
+}
+<body style="background-image: @(backgroundImage); background-size: cover; background-position: center;">
+
+    <h1>Dokümanlar</h1>
+    
+    <div class="container">
+        @foreach (var dokuman in Model)
+        {
+            //Dokuman_Baslik ve Dokuman_Icerik null olmayan dosyalar
+            if (!string.IsNullOrEmpty(dokuman.Dokuman_Baslik) && !string.IsNullOrEmpty(dokuman.Dokuman_Icerik))
+            {
+                <div class="dokuman-item">
+                 
+                    <h4>@dokuman.Dokuman_Baslik</h4>
+                    <p>@dokuman.Dokuman_Icerik</p>
+                </div>
+            }
+        }
+    </div>
+    <!--Gizli metinleri goster veya gizle-->
+    <script>
+        function toggleLinks(element) {
+        
+            $(element).find('.hidden-text').slideToggle();
+        }
+    </script>
+</body>
+</html>
