@@ -28,8 +28,34 @@ cd Dershane1
 ### 2. Veritabanı Kurulumu
 Uygulama, Entity Framework Core Code-First yaklaşımını kullanır. Veritabanını kurmak için:
 
-- `appsettings.json` dosyasındaki bağlantı dizesini SQL Server örneğinize uygun şekilde güncelleyin
-- Proje dizininde bir terminal açın ve aşağıdaki komutları çalıştırın:
+#### SQL Server Yapılandırması:
+1. SQL Server Management Studio'yu (SSMS) açın veya tercih ettiğiniz SQL Server yönetim aracını kullanın
+2. Yeni bir veritabanı oluşturun (örneğin 'DershaneDB')
+3. Veritabanına erişmek için bir kullanıcı oluşturun veya Windows kimlik doğrulaması kullanın
+
+#### Bağlantı dizesini güncelleyin:
+`appsettings.json` dosyasındaki bağlantı dizesini SQL Server örneğinize uygun şekilde güncelleyin:
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=SUNUCU_ADI;Database=DershaneDB;User Id=KULLANICI_ADI;Password=SIFRE;TrustServerCertificate=True;"
+}
+```
+
+Windows kimlik doğrulaması kullanıyorsanız:
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=SUNUCU_ADI;Database=DershaneDB;Trusted_Connection=True;TrustServerCertificate=True;"
+}
+```
+
+Burada:
+- SUNUCU_ADI: SQL Server örneğinizin adı (örn. "localhost" veya "localhost\\SQLEXPRESS")
+- DershaneDB: Oluşturduğunuz veritabanının adı
+- KULLANICI_ADI ve SIFRE: SQL Server kullanıcı kimlik bilgileriniz (SQL kimlik doğrulaması kullanıyorsanız)
+
+#### Veritabanı Oluşturma:
+Proje dizininde bir terminal açın ve aşağıdaki komutları çalıştırın:
 ```bash
 dotnet ef database update
 ```
@@ -73,7 +99,12 @@ Uygulama, kimlik doğrulama ve yetkilendirme için ASP.NET Core Identity kullan�
   dotnet ef database drop --force
   dotnet ef database update
   ```
-- Herhangi bir izin sorunu için, SQL Server kullanıcınızın uygun izinlere sahip olduğundan emin olun
+- SQL Server bağlantı sorunları için:
+  - SQL Server hizmetinin çalıştığından emin olun
+  - Bağlantı dizesinin doğru formatta olduğunu kontrol edin
+  - SQL Server kimlik bilgilerinizin doğru olduğundan emin olun
+  - Firewall ayarlarının SQL Server bağlantısına izin verdiğinden emin olun
+- Herhangi bir izin sorunu için, SQL Server kullanıcınızın uygun izinlere sahip olduğundan emin olun (db_owner rolü genellikle yeterlidir)
 
 ## Ek Kaynaklar
 - [ASP.NET Core Dokümantasyonu](https://docs.microsoft.com/en-us/aspnet/core)
