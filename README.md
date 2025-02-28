@@ -16,6 +16,7 @@ Bu uygulamayı yerel olarak çalıştırmak için aşağıdakilere ihtiyacınız
 - [.NET Core SDK](https://dotnet.microsoft.com/download) (versiyon 6.0 veya daha yenisi)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (Express veya Developer sürümü yeterlidir)
 - [Visual Studio](https://visualstudio.microsoft.com/) (önerilen) veya [Visual Studio Code](https://code.visualstudio.com/)
+- [Entity Framework Core Tools](https://docs.microsoft.com/en-us/ef/core/cli/dotnet) (`dotnet tool install --global dotnet-ef`)
 
 ## Kurulum Talimatları
 
@@ -54,11 +55,41 @@ Burada:
 - DershaneDB: Oluşturduğunuz veritabanının adı
 - KULLANICI_ADI ve SIFRE: SQL Server kullanıcı kimlik bilgileriniz (SQL kimlik doğrulaması kullanıyorsanız)
 
-#### Veritabanı Oluşturma:
-Proje dizininde bir terminal açın ve aşağıdaki komutları çalıştırın:
+#### Entity Framework Migrasyon Adımları:
+
+1. **Entity Framework Core Tools Kurulumu** (eğer kurulu değilse):
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+2. **Mevcut Migrasyonları Kontrol Etme**:
+```bash
+dotnet ef migrations list
+```
+
+3. **Eğer migrasyonlar mevcut değilse, ilk migrasyonu oluşturun**:
+```bash
+dotnet ef migrations add InitialCreate
+```
+
+4. **Veritabanını Güncelleyin**:
 ```bash
 dotnet ef database update
 ```
+
+5. **İleri düzey kullanıcılar için komutlar**:
+   - Belirli bir migrasyona kadar veritabanını güncellemek için:
+   ```bash
+   dotnet ef database update MigrasyonAdı
+   ```
+   - Migrasyona ait SQL komutlarını görmek için:
+   ```bash
+   dotnet ef migrations script
+   ```
+   - Veritabanını sıfırlamak için:
+   ```bash
+   dotnet ef database drop --force
+   ```
 
 Örnek verilerle başlamak isterseniz, şunu çalıştırabilirsiniz:
 ```bash
@@ -97,6 +128,8 @@ Uygulama, kimlik doğrulama ve yetkilendirme için ASP.NET Core Identity kullan�
 - Veritabanı göçleriyle ilgili herhangi bir sorunla karşılaşırsanız, şunları deneyin:
   ```bash
   dotnet ef database drop --force
+  dotnet ef migrations remove // Son migrasyonu kaldırmak için
+  dotnet ef migrations add YeniMigrasyon
   dotnet ef database update
   ```
 - SQL Server bağlantı sorunları için:
@@ -109,6 +142,7 @@ Uygulama, kimlik doğrulama ve yetkilendirme için ASP.NET Core Identity kullan�
 ## Ek Kaynaklar
 - [ASP.NET Core Dokümantasyonu](https://docs.microsoft.com/en-us/aspnet/core)
 - [Entity Framework Core Dokümantasyonu](https://docs.microsoft.com/en-us/ef/core)
+- [Entity Framework Core Migrations](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/)
 
 ## Lisans
 [Lisans Bilgileriniz]
