@@ -109,13 +109,57 @@ dotnet run seeddata
   ```
   - Bir tarayıcı açın ve `https://localhost:5001` veya `http://localhost:5000` adresine gidin
 
-## Proje Yapısı
-- **Controllers/**: HTTP isteklerini işleyen MVC denetleyicilerini içerir
-- **Models/**: Veri modellerini ve görünüm modellerini içerir
-- **Views/**: Kullanıcı arayüzü için Razor görünümlerini içerir
-- **Data/**: Veritabanı bağlamını ve yapılandırmalarını içerir
-- **Migrations/**: Veritabanı göç dosyalarını içerir
-- **wwwroot/**: CSS, JavaScript ve görseller gibi statik dosyaları içerir
+## Proje Yapısı ve Dosyaların Amaçları
+### Temel Dosyalar
+- **Program.cs**: Uygulamanın giriş noktası. Kestrel web sunucusunu yapılandırır, middleware'leri ekler, bağımlılık enjeksiyonu hizmetlerini kaydeder ve uygulamayı başlatır.
+- **Dershane.csproj**: Proje dosyası. Projenin bağımlılıklarını, hedef çerçeve bilgilerini ve diğer yapılandırma ayarlarını içerir.
+- **appsettings.json**: Uygulama yapılandırması. Veritabanı bağlantı dizelerini, günlük (log) ayarlarını ve diğer yapılandırma bilgilerini içerir.
+- **Dershane.sln**: Visual Studio çözüm dosyası.
+
+### Klasör Yapısı
+- **Controllers/**: HTTP isteklerini işleyen MVC denetleyicilerini içerir.
+  - **HomeController.cs**: Ana sayfa ve karşılama ekranı işlemlerini yönetir.
+  - **AdminController.cs**: Yönetici paneli ve yönetici işlemlerini yönetir.
+  - **StudentsController.cs**: Öğrenci kayıtları, profiller ve öğrenci işlemlerini yönetir.
+  - **TeachersController.cs**: Öğretmen profilleri ve işlemlerini yönetir.
+  - **CoursesController.cs**: Kurs oluşturma, düzenleme ve silme işlemlerini yönetir.
+  - **AccountController.cs**: Kullanıcı kimlik doğrulama ve yetkilendirme işlemlerini yönetir.
+
+- **Models/**: Veri modellerini ve görünüm modellerini içerir.
+  - **Student.cs**: Öğrenci veri modeli ve özelliklerini tanımlar.
+  - **Teacher.cs**: Öğretmen veri modeli ve özelliklerini tanımlar.
+  - **Course.cs**: Kurs veri modeli ve özelliklerini tanımlar.
+  - **Payment.cs**: Ödeme veri modeli ve özelliklerini tanımlar.
+  - **User.cs**: Kullanıcı veri modeli ve kimlik doğrulama özelliklerini tanımlar.
+  - **ViewModels/**: Görünüm modellerini içerir, genellikle formlar ve veri girişi için kullanılır.
+
+- **Views/**: Kullanıcı arayüzü için Razor görünümlerini içerir.
+  - **Home/**: Ana sayfa görünümleri.
+  - **Admin/**: Yönetici paneli görünümleri.
+  - **Students/**: Öğrenci işlemleri için görünümler.
+  - **Teachers/**: Öğretmen işlemleri için görünümler.
+  - **Courses/**: Kurs işlemleri için görünümler.
+  - **Account/**: Giriş, kayıt ve hesap yönetimi görünümleri.
+  - **Shared/**: Tüm görünümlerde paylaşılan şablonlar ve kısmi görünümler.
+    - **_Layout.cshtml**: Temel sayfa düzeni şablonu.
+
+- **Data/**: Veritabanı bağlamını ve yapılandırmalarını içerir.
+  - **ApplicationDbContext.cs**: Entity Framework veritabanı bağlamı, modelleri veritabanına bağlar.
+  - **Repositories/**: Veritabanı işlemleri için repository sınıfları.
+  - **SeedData.cs**: Başlangıç verileri ve örnek veri oluşturma fonksiyonları içerir.
+
+- **Migrations/**: Veritabanı göç dosyalarını içerir, veritabanı şema değişikliklerini yönetir.
+  - Her migrasyon, veritabanı şemasını güncelleyen kod içerir.
+
+- **wwwroot/**: CSS, JavaScript ve görseller gibi statik dosyaları içerir.
+  - **css/**: Stil dosyaları.
+    - **site.css**: Ana site stil dosyası.
+  - **js/**: JavaScript dosyaları.
+    - **site.js**: Ana site JavaScript dosyası.
+  - **lib/**: Üçüncü taraf kütüphaneler (Bootstrap, jQuery, vb.).
+  - **images/**: Resimler ve ikonlar.
+
+- **logs/**: Uygulama çalışma günlüklerini içerir, hata ayıklama için kullanılır.
 
 ## Kimlik Doğrulama
 Uygulama, kimlik doğrulama ve yetkilendirme için ASP.NET Core Identity kullanır. Varsayılan yönetici kimlik bilgileri:
